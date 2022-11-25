@@ -30,6 +30,10 @@ homicide_data_df = homicide_data_df %>%
 
 2. Omit cities Dallas, TX; Phoenix, AZ; Kansas City, MO and Tulsa, AL
 
+3. Limit the analysis those for whom victim_race is white or black
+
+4. Be sure victim_age is numeric
+
 ```{r}
 homicide_data_df = homicide_data_df %>% 
   mutate(
@@ -40,8 +44,14 @@ homicide_data_df = homicide_data_df %>%
     )
   ) %>% 
 filter(
-    city_state != "Dallas,TX" & city_state != "Phoenix,AZ" & city_state != "Kansas City,MO" & city_state !="Tulsa,AL"
-  )
+    city_state != "Dallas,TX" & city_state != "Phoenix,AZ" & city_state != "Kansas City,MO" & city_state != "Tulsa,AL"
+  ) %>% 
+   mutate(
+    victim_race = ifelse(
+      victim_race == "White", "white", "non-white"
+      ),
+    victim_age = as.numeric(victim_age)
+    )
 ```
 
 
