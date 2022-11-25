@@ -26,7 +26,9 @@ homicide_data_df = homicide_data_df %>%
   select(-city,-state)
 ```
 
-Create a new binary variable indicating whether the homicide is solved
+1. Create a new binary variable indicating whether the homicide is solved
+
+2. Omit cities Dallas, TX; Phoenix, AZ; Kansas City, MO and Tulsa, AL
 
 ```{r}
 homicide_data_df = homicide_data_df %>% 
@@ -36,6 +38,9 @@ homicide_data_df = homicide_data_df %>%
       disposition == "Open/No arrest" ~ "unsolved",
       disposition == "Closed by arrest" ~ "solved"
     )
+  ) %>% 
+filter(
+    city_state != "Dallas,TX" & city_state != "Phoenix,AZ" & city_state != "Kansas City,MO" & city_state !="Tulsa,AL"
   )
 ```
 
