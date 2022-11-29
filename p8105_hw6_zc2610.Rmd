@@ -76,6 +76,15 @@ birthweight_df = birthweight_df %>%
   )
 ```
 
+Check missing data
+
+```{r}
+sum(!complete.cases(birthweight_df))
+```
+
+Answer:
+
+There is no missing data in this dataset
 
 
 
