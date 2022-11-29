@@ -60,7 +60,7 @@ For the city of Baltimore, MD, use the glm function to fit a logistic regression
 Import dataset
 
 ```{r}
-homicide_data_df = read_csv("./data/birthweight.csv") %>% 
+birthweight_df = read_csv("./data/birthweight.csv") %>% 
 janitor::clean_names()
 ```
 
