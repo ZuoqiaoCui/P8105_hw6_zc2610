@@ -102,6 +102,8 @@ Answer:
 
 2. Obtain regression results
 
+3. Extract the adjusted odds ratio (and CI) for solving homicides
+
 ```{r}
 fit_logistic_df = homicide_data_df %>% 
   select(victim_age,victim_race,victim_sex,city_state,whether_solved) %>% 
@@ -113,7 +115,13 @@ fit_logistic_df = homicide_data_df %>%
     results = map(models, broom::tidy)
   ) %>% 
   select(-data,-models) %>% 
-  unnest(results)
+  unnest(results) %>% 
+   mutate(
+    OR = exp(estimate),
+    OR_lower = exp(estimate - std.error * 1.96),
+    OR_upper = exp(estimate + std.error * 1.96)
+        ) %>% 
+  select(city_state,term,log_OR = estimate,OR,OR_lower,OR_upper)
 ```
 
 
