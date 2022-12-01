@@ -69,6 +69,8 @@ Baltimore_glm = glm(whether_solved ~ victim_age + victim_sex + victim_race,data 
 
 1. Obtain the estimate and confidence interval of the adjusted odds ratio for solving homicides
 
+2. Compare male victims to female victims keeping all other variables fixed
+
 ```{r}
 Baltimore_glm %>% 
   mutate(
@@ -77,7 +79,22 @@ Baltimore_glm %>%
     OR_upper = exp(estimate + std.error * 1.96)
         ) %>%
    select(term, log_OR = estimate, OR,OR_lower,OR_upper, p.value)
+
+fit_logistic_sex = Baltimore_glm %>%
+  filter(term == "victim_sexMale") %>% 
+  mutate(
+    OR = exp(estimate),
+    OR_lower = exp(estimate - std.error * 1.96),
+    OR_upper = exp(estimate + std.error * 1.96)
+        ) %>%
+   select(term, log_OR = estimate, OR,OR_lower,OR_upper, p.value)
 ```
+
+Answer:
+
+1. The estimate of the adjusted odds ratio for solving homicides comparing male victims to female victims is `r fit_logistic_sex$log_OR`
+
+2. The confident interval is (`r fit_logistic_sex$OR_lower`,`r fit_logistic_sex$OR_upper`)
 
 
 # Problem 3
