@@ -63,9 +63,23 @@ filter(
 ```{r}
 homicide_Baltimore_df = homicide_data_df %>% 
   filter(city_state == 'Baltimore,MD') 
-Baltimore_glm = glm(whether_solved ~ victim_age + victim_sex + victim_race, family = binomial(link = logit), data = homicide_Baltimore_df) %>% 
+Baltimore_glm = glm(whether_solved ~ victim_age + victim_sex + victim_race,data = homicide_Baltimore_df, family = binomial()) %>% 
   broom::tidy()
 ```
+
+1. Obtain the estimate and confidence interval of the adjusted odds ratio for solving homicides
+
+```{r}
+Baltimore_glm %>% 
+  mutate(
+    OR = exp(estimate),
+    OR_lower = exp(estimate - std.error * 1.96),
+    OR_upper = exp(estimate + std.error * 1.96)
+        ) %>%
+   select(term, log_OR = estimate, OR,OR_lower,OR_upper, p.value)
+```
+
+
 # Problem 3
 
 Import dataset
