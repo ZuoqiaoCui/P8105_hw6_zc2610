@@ -100,13 +100,20 @@ Answer:
 
 1. Run glm for each of the cities in the homicide dataset
 
+2. Obtain regression results
+
 ```{r}
 fit_logistic_df = homicide_data_df %>% 
   select(victim_age,victim_race,victim_sex,city_state,whether_solved) %>% 
   nest(-city_state) %>% 
   mutate(
    models = map(.x = data, ~glm(whether_solved ~ victim_age + victim_sex + victim_race, family = binomial(link = logit), data = .x))
-  ) 
+  ) %>% 
+  mutate(
+    results = map(models, broom::tidy)
+  ) %>% 
+  select(-data,-models) %>% 
+  unnest(results)
 ```
 
 
