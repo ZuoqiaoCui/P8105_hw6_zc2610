@@ -7,6 +7,9 @@ output: github_document
 
 ```{r}
 library(tidyverse)
+library(modelr)
+library(viridis)
+library(mgcv)
 ```
 
 # Problem 2
@@ -26,7 +29,7 @@ homicide_data_df = homicide_data_df %>%
   select(-city,-state)
 ```
 
-1. Create a new binary variable indicating whether the homicide is solved
+1. Create a new binary variable indicating whether the homicide is solved (0 means "unsolved" and 1 means "solved")
 
 2. Omit cities Dallas, TX; Phoenix, AZ; Kansas City, MO and Tulsa, AL
 
@@ -38,22 +41,17 @@ homicide_data_df = homicide_data_df %>%
 homicide_data_df = homicide_data_df %>% 
   mutate(
     whether_solved = case_when(
-      disposition == "Closed without arrest" ~ "unsolved",
-      disposition == "Open/No arrest" ~ "unsolved",
-      disposition == "Closed by arrest" ~ "resolved"
+      disposition == "Closed without arrest" ~ 0,
+      disposition == "Open/No arrest" ~ 0,
+      disposition == "Closed by arrest" ~ 1
     )
   ) %>% 
 filter(
     city_state != "Dallas,TX" & city_state != "Phoenix,AZ" & city_state != "Kansas City,MO" & city_state != "Tulsa,AL"
   ) %>% 
-   mutate(
-      victim_age = as.numeric(victim_age)
-    )
+    filter(victim_age != 'Unknown') %>% 
+  mutate(victim_age = as.numeric(victim_age))
 ```
-
-For the city of Baltimore, MD, use the glm function to fit a logistic regression with resolved vs unresolved as the outcome and victim age, sex and race as predictors
-
-
 
 # Problem 3
 
