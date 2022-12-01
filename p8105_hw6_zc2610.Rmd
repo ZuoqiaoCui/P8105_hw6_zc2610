@@ -104,6 +104,8 @@ Answer:
 
 3. Extract the adjusted odds ratio (and CI) for solving homicides
 
+4. Compare male victims to female victims only
+
 ```{r}
 fit_logistic_df = homicide_data_df %>% 
   select(victim_age,victim_race,victim_sex,city_state,whether_solved) %>% 
@@ -122,6 +124,8 @@ fit_logistic_df = homicide_data_df %>%
     OR_upper = exp(estimate + std.error * 1.96)
         ) %>% 
   select(city_state,term,log_OR = estimate,OR,OR_lower,OR_upper)
+fit_logistic_sex_df = fit_logistic_df %>% 
+  filter(term == "victim_sexMale")
 ```
 
 
