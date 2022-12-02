@@ -244,13 +244,26 @@ model_2 = lm(bwt ~ bhead + blength + babysex + bhead*blength + bhead*babysex + b
 
 1. Create train and test datasets
 
+2. Fit candidate models above and assess prediction accuracy
+
 ```{r}
 cv_df = 
   crossv_mc(birthweight_df, 100) %>% 
   mutate(
     train = map(train, as_tibble),
     test = map(test, as_tibble)
-    )
+    ) %>% 
+  mutate(
+    train_fit_birthweight_model = map(train, ~ lm(bwt ~ bhead + blength + delwt + fincome + malform + smoken +    wtgain, data = birthweight_df)),
+    train_model_1 = map(train,~lm(bwt ~ blength + gaweeks, data = birthweight_df)),
+    train_model_2 = map(train,~lm(bwt ~ bhead + blength + babysex + bhead*blength + bhead*babysex + blength*babysex + bhead*blength*babysex, data = birthweight_df))
+  ) %>% 
+  mutate(
+    rmse_my_model = map2_dbl(train_fit_birthweight_model, test, ~rmse(model = .x, data = .y)),
+    rmse_model_1 = map2_dbl( train_model_1, test, ~rmse(model = .x, data = .y)),
+    rmse_model_2 = map2_dbl( train_model_2, test, ~rmse(model = .x, data = .y))
+  )
+  
 ```
 
 
