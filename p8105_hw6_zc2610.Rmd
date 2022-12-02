@@ -128,6 +128,32 @@ fit_logistic_sex_df = fit_logistic_df %>%
   filter(term == "victim_sexMale")
 ```
 
+Create a plot that shows the estimated ORs and CIs for each city and organize cities according to estimated OR
+
+```{r}
+fit_logistic_sex_df %>% 
+  mutate(city_state = fct_reorder(city_state, OR)) %>% 
+  ggplot(aes(x = city_state, 
+             y = OR, 
+             ymin = OR_lower, 
+             ymax = OR_upper,
+             color = city_state
+             )
+  ) +
+    geom_point() +
+    geom_errorbar() +
+    theme_bw() +
+    labs(
+      x = "City",
+      y = "OR",
+      title = "Odds ratios and CIs for solving homicides comparing gender",
+      caption = "Homicide Data"
+    ) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = rel(0.8)),plot.title = element_text(hjust = 0.5),legend.position = "none") 
+  
+```
+
+
 
 
 # Problem 3
