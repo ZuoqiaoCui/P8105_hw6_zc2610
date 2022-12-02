@@ -212,5 +212,24 @@ Propose a regression model for birthweight
 fit_birthweight_model = lm(bwt ~ bhead + blength + delwt + fincome + malform + smoken + wtgain, data = birthweight_df)
 ```
 
+Make a plot of model residuals against fitted values
+
+```{r}
+residuals_fitted_plot = birthweight_df %>% 
+   modelr::add_predictions(fit_birthweight_model) %>% 
+   modelr::add_residuals(fit_birthweight_model) %>% 
+  ggplot(aes(x = pred, y = resid)) +
+  geom_point(alpha = .3) +
+  labs(
+    title = "Model Residuals vs Fitted Values",
+    x = "Fitted Values",
+    y = "Residuals",
+    caption = "birthweight data"
+  ) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+residuals_fitted_plot
+```
+
 
 
