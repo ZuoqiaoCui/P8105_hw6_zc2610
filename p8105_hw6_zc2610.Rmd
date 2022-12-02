@@ -8,7 +8,6 @@ output: github_document
 ```{r}
 library(tidyverse)
 library(modelr)
-library(viridis)
 library(mgcv)
 ```
 
@@ -241,6 +240,17 @@ Fit the second model: using head circumference, length, sex, and all interaction
 
 ```{r}
 model_2 = lm(bwt ~ bhead + blength + babysex + bhead*blength + bhead*babysex + blength*babysex + bhead*blength*babysex, data = birthweight_df)
+```
+
+1. Create train and test datasets
+
+```{r}
+cv_df = 
+  crossv_mc(birthweight_df, 100) %>% 
+  mutate(
+    train = map(train, as_tibble),
+    test = map(test, as_tibble)
+    )
 ```
 
 
