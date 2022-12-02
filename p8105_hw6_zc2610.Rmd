@@ -269,10 +269,23 @@ cv_df =
 
 1. Focused on RMSE as a way to compare these models
 
+2. Make plots that show the distribution of RMSE values for each candidate model.
 
 ```{r}
 cv_df %>% 
-  select(starts_with("rmse")) 
+  select(starts_with("rmse")) %>% 
+  pivot_longer(
+    everything(),
+    names_to = "model", 
+    values_to = "RMSE",
+    names_prefix = "rmse_") %>% 
+  mutate(model = fct_inorder(model)) %>% 
+  ggplot(aes(x = model, y = RMSE, color = model)) + geom_violin() +
+  labs(
+      title = "The distribution of RMSE values for each candidate model",
+      caption = "Birthweight Data"
+    ) +
+  theme(plot.title = element_text(hjust = 0.5),legend.position = "bottom") 
 ```
 
 
