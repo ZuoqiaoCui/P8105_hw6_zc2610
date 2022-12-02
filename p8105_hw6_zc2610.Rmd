@@ -231,5 +231,12 @@ residuals_fitted_plot = birthweight_df %>%
 residuals_fitted_plot
 ```
 
+Fit the first model: using length at birth and gestational age as predictors
+
+```{r}
+model_1 = lm(bwt ~ blength + gaweeks, data = birthweight_df)
+```
+
+
 
 
