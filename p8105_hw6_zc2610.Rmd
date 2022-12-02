@@ -237,6 +237,13 @@ Fit the first model: using length at birth and gestational age as predictors
 model_1 = lm(bwt ~ blength + gaweeks, data = birthweight_df)
 ```
 
+Fit the second model: using head circumference, length, sex, and all interactions (including the three-way interaction) between these
+
+```{r}
+model_2 = lm(bwt ~ bhead + blength + babysex + bhead*blength + bhead*babysex + blength*babysex + bhead*blength*babysex, data = birthweight_df)
+```
+
+
 
 
 
