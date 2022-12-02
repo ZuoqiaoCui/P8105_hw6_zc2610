@@ -163,8 +163,6 @@ Comments:
 The confidence intervals of some cities (such as Chicago, JL) are narrow so that we can be more confident about future predictions for these cities.
 
 
-
-
 # Problem 3
 
 Import dataset
@@ -189,12 +187,30 @@ birthweight_df = birthweight_df %>%
 Check missing data
 
 ```{r}
-sum(!complete.cases(birthweight_df))
+num_of_missing = sum(!complete.cases(birthweight_df))
+
+num_of_missing
 ```
 
 Answer:
 
 There is no missing data in this dataset
+
+In my hypothesis, I choose the following variables as predictors that may affect the child's birthweight.
+
+* bhead: baby’s head circumference at birth (centimeters)
+* blength: baby’s length at birth (centimeters)
+* delwt: mother’s weight at delivery (pounds)
+* fincome: family monthly income (in hundreds, rounded)
+* malform: presence of malformations that could affect weight (0 = absent, 1 = present)
+* smoken: average number of cigarettes smoked per day during pregnancy
+* wtgain: mother’s weight gain during pregnancy (pounds)
+
+Propose a regression model for birthweight
+
+```{r}
+fit_birthweight_model = lm(bwt ~ bhead + blength + delwt + fincome + malform + smoken + wtgain, data = birthweight_df)
+```
 
 
 
