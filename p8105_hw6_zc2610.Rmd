@@ -156,10 +156,11 @@ Comments:
 
 1. New York, NY has the lowest odds ratio.
 
+
 2. For cities whose OR is smaller than 1, males have lower odds compared to females. For cities whose OR is greater than 1, male has greater odds compared to female.
 
 
-The confidence intervals of some cities (such as Chicago, JL) are narrow so that we can be more confident about future predictions for these cities.
+3. The confidence intervals of some cities (such as Chicago, JL) are narrow so that we can be more confident about future predictions for these cities.
 
 
 # Problem 3
@@ -206,6 +207,16 @@ In my hypothesis, I choose the following variables as predictors that may affect
 * wtgain: mother’s weight gain during pregnancy (pounds)
 
 Propose a regression model for birthweight
+
+Modeling process:
+
+This model is based on a hypothesized structure for the factors that underly birthweight
+
+1. I hypothesize that the baby’s head circumference at birth and baby’s length at birth should have direct relationship with the baby's birth weight, so I include these two variables into my model.
+
+2. I hypothesize that variables related to the mother during the process of pregnant should make effects to the baby's birth weight, so I include delwt,malform,smoken and wtgain variables into my model.
+
+3. Since I hypothesize that the family income will influence the life quality, emotion or nutrition obtained by the mother, therefore, I include fincome into my model.
 
 ```{r}
 fit_birthweight_model = lm(bwt ~ bhead + blength + delwt + fincome + malform + smoken + wtgain, data = birthweight_df)
