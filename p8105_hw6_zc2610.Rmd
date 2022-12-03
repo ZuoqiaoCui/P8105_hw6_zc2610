@@ -299,6 +299,10 @@ cv_df %>%
   theme(plot.title = element_text(hjust = 0.5),legend.position = "bottom") 
 ```
 
+Summary:
+
+Compared to other two models, the model selected by myself has the lowest RMSE so that it is fairly optimal. While the first model has the highest RMSE so that it makes a bad prediction to the baby's birth weight compared to other two models.
+
 
 
 
