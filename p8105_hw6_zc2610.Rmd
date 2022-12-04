@@ -147,19 +147,19 @@ fit_logistic_sex = Baltimore_glm %>%
 
 Answer:
 
-1. The estimate of the adjusted odds ratio for solving homicides comparing male victims to female victims is `r fit_logistic_sex$log_OR`
+1. The estimate of the adjusted odds ratio for solving homicides comparing male victims to female victims is `r fit_logistic_sex$OR`
 
 2. The confident interval is (`r fit_logistic_sex$OR_lower`,`r fit_logistic_sex$OR_upper`)
 
 
 
-1. Run glm for each of the cities in the homicide dataset
+* Run glm for each of the cities in the homicide dataset
 
-2. Obtain regression results
+* Obtain regression results
 
-3. Extract the adjusted odds ratio (and CI) for solving homicides
+* Extract the adjusted odds ratio (and CI) for solving homicides
 
-4. Compare male victims to female victims only
+* Compare male victims to female victims only
 
 ```{r}
 fit_logistic_df = homicide_data_df %>% 
